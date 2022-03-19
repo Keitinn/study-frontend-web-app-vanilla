@@ -17,6 +17,7 @@
       padding: 0.4rem;
     }
 
+
     /* リスト */
     ul {
       padding: 0;
@@ -29,6 +30,13 @@
       list-style: none;
       margin-top: 1rem;
       padding: 1rem;
+    }
+
+    #export {
+      background-color: #3498db;
+      border: none;
+      color: #ffffff;
+      padding: 0.4rem;
     }
   </style>
   <script src="script.js"></script>
@@ -50,5 +58,8 @@
   <ul>
   </ul>
   <button id="export" type="button">CSV出力</button>
+  <form id="importForm">
+    <input id="file" type="file" name="file" onchange="csvImport()">
+  </form>
 </body>
 </html>

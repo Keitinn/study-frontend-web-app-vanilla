@@ -194,6 +194,7 @@ function saveTasks() {
   window.localStorage.setItem("tasks", jsonString);
 }
 
+// CSV出力機能
 function csvExport() {
   let fileName = "export.csv";
   let outputString = "タスク名,期日,進捗状況\n";
@@ -233,4 +234,50 @@ function csvExport() {
     //createObjectURLで作成したオブジェクトURLを開放する
     (window.URL || window.webkitURL).revokeObjectURL(url);
   }
+}
+
+function csvImport() {
+  console.log(event);
+  const file = event.target.files[0]; // File オブジェクト
+  const reader = new FileReader();
+  reader.onload = () => {
+    console.log(reader.result);
+    let importTasks = reader.result.split(/\r\n|\r|\n/);
+    for (let rawTask of importTasks) {
+      let taskArray = rawTask.split(",");
+      if (taskArray.length != 3) {
+        continue;
+      }
+      let isCompleted = taskArray[2] == "済";
+      let task = {
+        name: taskArray[0],
+        dueDate: taskArray[1],
+        isCompleted: isCompleted,
+      };
+      if (task.name == "タスク名") {
+        continue;
+      }
+      let taskIndex = getIndexTasks(task.name);
+      if (taskIndex != -1) {
+        tasks[taskIndex] = task;
+      } else {
+        tasks.push(task);
+      }
+    }
+    saveTasks();
+    renderTasks();
+  };
+
+  reader.readAsText(file);
+}
+
+function getIndexTasks(taskName) {
+  let index = 0;
+  for (let task of tasks) {
+    if (task.name == taskName) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
 }
