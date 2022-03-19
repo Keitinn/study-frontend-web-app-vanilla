@@ -1,6 +1,6 @@
 let taskListElem; // どこからでも読み書きできるように外側に変数を移動
 
-let tasks;
+let tasks = new []();
 window.addEventListener("load", function () {
   // リストを取得
   taskListElem = document.querySelector("ul");
