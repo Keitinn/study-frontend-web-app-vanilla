@@ -3,6 +3,34 @@
 <head>
   <title>ToDo</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    /* 入力欄及びボタン */
+    input {
+      font-size: 1.3rem;
+    }
+
+    /* 送信ボタン */
+    input[type="submit"] {
+      background-color: #3498db;
+      border: none;
+      color: #ffffff;
+      padding: 0.4rem;
+    }
+
+    /* リスト */
+    ul {
+      padding: 0;
+    }
+
+    /* リスト項目 */
+    li {
+      background-color: #eeeeee;
+      font-size: 1.5rem;
+      list-style: none;
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+  </style>
   <script src="script.js"></script>
 </head>
 <body>
@@ -21,5 +49,6 @@
   </form>
   <ul>
   </ul>
+  <button id="export" type="button">CSV出力</button>
 </body>
 </html>
