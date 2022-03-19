@@ -8,7 +8,10 @@ window.addEventListener("load", function () {
 
   // LocalStorageから配列を読み込む
   loadTasks();
-
+  //ボタンを取得する
+  const download = document.getElementById("export");
+  //ボタンがクリックされたら「downloadCSV」を実行する
+  download.addEventListener("click", csvExport, false);
   // 描画
   renderTasks();
 });
@@ -191,4 +194,43 @@ function saveTasks() {
   window.localStorage.setItem("tasks", jsonString);
 }
 
-function csvExport() {}
+function csvExport() {
+  let fileName = "export.csv";
+  let outputString = "タスク名,期日,進捗状況\n";
+  const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+
+  for (let task of tasks) {
+    let completedString = "";
+    if (task.isCompleted) {
+      completedString = "済";
+    } else {
+      completedString = "未";
+    }
+    outputString =
+      outputString +
+      task.name +
+      "," +
+      task.dueDate +
+      "," +
+      completedString +
+      "\n";
+  }
+  const blob = new Blob([bom, outputString], { type: "text/csv" });
+  //IE10/11用(download属性が機能しないためmsSaveBlobを使用）
+  if (window.navigator.msSaveBlob) {
+    window.navigator.msSaveBlob(blob, fileName);
+  } else {
+    //BlobからオブジェクトURLを作成する
+    const url = (window.URL || window.webkitURL).createObjectURL(blob);
+    //ダウンロード用にリンクを作成する
+    const download = document.createElement("a");
+    //リンク先に上記で生成したURLを指定する
+    download.href = url;
+    //download属性にファイル名を指定する
+    download.download = fileName;
+    //作成したリンクをクリックしてダウンロードを実行する
+    download.click();
+    //createObjectURLで作成したオブジェクトURLを開放する
+    (window.URL || window.webkitURL).revokeObjectURL(url);
+  }
+}
