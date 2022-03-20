@@ -8,10 +8,7 @@ window.addEventListener("load", function () {
 
   // LocalStorageから配列を読み込む
   loadTasks();
-  //ボタンを取得する
-  const download = document.getElementById("export");
-  //ボタンがクリックされたら「downloadCSV」を実行する
-  download.addEventListener("click", csvExport, false);
+
   // 描画
   renderTasks();
 });
@@ -242,7 +239,6 @@ function csvExport() {
 }
 
 function csvImport() {
-  console.log(event);
   const file = event.target.files[0]; // File オブジェクト
   const reader = new FileReader();
   reader.onload = () => {
