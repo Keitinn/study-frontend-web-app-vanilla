@@ -144,6 +144,7 @@ function addTask(taskName, taskDueDate) {
   taskFormElm.reset();
 }
 
+// ダブルクリックした際にタスクを削除する
 function deleteTask(taskName) {
   // 【変更点】
   // 新しい配列を用意
@@ -165,6 +166,7 @@ function deleteTask(taskName) {
   renderTasks();
 }
 
+// タスククリック時に完了状態未完了状態をトグルする
 function toggleTaskComplete(taskName) {
   // 現状の配列を反復
   for (let task of tasks) {
@@ -231,6 +233,7 @@ function csvExport() {
   }
 }
 
+// CSV取込メソッド
 function csvImport() {
   const file = event.target.files[0]; // File オブジェクト
   if (file.type != 'application/vnd.ms-excel') {
@@ -269,6 +272,8 @@ function csvImport() {
   reader.readAsText(file);
 }
 
+// 引数のタスク名と同一のタスクの配列内のインデックスを返す
+// 存在しない場合は-1を返す
 function getIndexTasks(taskName) {
   let index = 0;
   for (let task of tasks) {
