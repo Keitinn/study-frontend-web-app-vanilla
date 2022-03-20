@@ -233,6 +233,10 @@ function csvExport() {
 
 function csvImport() {
   const file = event.target.files[0]; // File オブジェクト
+  if (file.type != 'application/vnd.ms-excel') {
+    alert('CSVファイルではありません。');
+    return;
+  }
   const reader = new FileReader();
   reader.onload = () => {
     console.log(reader.result);
