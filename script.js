@@ -196,6 +196,11 @@ function saveTasks() {
 
 // CSV出力機能
 function csvExport() {
+  // タスクが登録されていない場合、警告を出す
+  if (tasks.length == 0) {
+    alert("出力するタスクがありません。");
+    return;
+  }
   let fileName = "export.csv";
   let outputString = "タスク名,期日,進捗状況\n";
   const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
