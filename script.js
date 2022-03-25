@@ -114,19 +114,18 @@ function renderTasks() {
 }
 
 function addTask(taskName, taskDueDate) {
-  let isDuplicate = false;
+  if (!taskName) {
+    alert('タスク名設定されていません。')
+    return;
+  }
 
   for (let task of tasks) {
     if (task.name == taskName) {
-      isDuplicate = true;
+      alert('すでに登録済みです');
+      return;
     }
   }
 
-  if (isDuplicate) {
-    // 配列にすでに同じ名前の項目がある
-    alert('すでに登録済みです');
-    return;
-  }
   // 配列に対し、項目を追加　【変更点】
   tasks.push({
     name: taskName,
