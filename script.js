@@ -115,7 +115,7 @@ function renderTasks() {
 
 function addTask(taskName, taskDueDate) {
   if (!taskName) {
-    alert('タスク名設定されていません。')
+    alert('タスク名が設定されていません。')
     return;
   }
 
