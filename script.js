@@ -1,5 +1,6 @@
 let taskListElem; // どこからでも読み書きできるように外側に変数を移動
-
+let isEdit = false;
+let editTaskName = '';
 let tasks = [];
 window.addEventListener('load', function () {
   // リストを取得
@@ -23,6 +24,20 @@ function renderTasks() {
     // リストの項目を作成
     let taskElem = document.createElement('li');
     taskElem.innerText = task.name;
+
+    // 編集ボタン
+    let editButtonElm = document.createElement('button');
+    editButtonElm.innerText = '編集';
+    editButtonElm.id = 'editBtn';
+
+    // 項目に編集ボタンを追加
+    taskElem.prepend(editButtonElm);
+
+    editButtonElm.addEventListener('click', function () {
+      setSelectTask(task.name, task.dueDate);
+      isEdit = true;
+      event.stopPropagation();
+    });
 
     // 項目をダブルクリックされたときの動作を設定
     taskElem.addEventListener('dblclick', function () {
@@ -113,6 +128,7 @@ function renderTasks() {
   }
 }
 
+// タスクを追加
 function addTask(taskName, taskDueDate) {
   if (!taskName) {
     alert('タスク名が設定されていません。')
@@ -120,18 +136,32 @@ function addTask(taskName, taskDueDate) {
   }
 
   for (let task of tasks) {
-    if (task.name == taskName) {
+    if (task.name == taskName && task.name != editTaskName) {
       alert('すでに登録済みです');
       return;
     }
   }
 
-  // 配列に対し、項目を追加　【変更点】
-  tasks.push({
-    name: taskName,
-    isCompleted: false,
-    dueDate: taskDueDate,
-  });
+  if (isEdit) {
+    for (let task of tasks) {
+      if (task.name == editTaskName) {
+        task.name = taskName;
+        task.dueDate = taskDueDate
+
+        editTaskName = '';
+        isEdit = false;
+        continue;
+      }
+    }
+  } else {
+    // 配列に対し、項目を追加　【変更点】
+    tasks.push({
+      name: taskName,
+      isCompleted: false,
+      dueDate: taskDueDate,
+    });
+  }
+
   // LocalStorage へ配列を保存
   saveTasks();
 
@@ -282,4 +312,16 @@ function getIndexTasks(taskName) {
     index++;
   }
   return -1;
+}
+
+// 引数のタスク名をフォームにセットする
+function setSelectTask(taskName, taskDueDate) {
+  let taskNameFormElm = document.querySelector('#taskName');
+  let taskDueDateElm = document.querySelector('#taskDueDate');
+
+  editTaskName = taskName;
+
+  taskNameFormElm.value = taskName;
+  taskDueDateElm.value = taskDueDate;
+
 }

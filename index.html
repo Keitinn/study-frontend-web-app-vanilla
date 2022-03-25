@@ -22,7 +22,6 @@
       padding: 0.4rem;
     }
 
-
     /* リスト */
     ul {
       padding: 0;
@@ -43,6 +42,13 @@
       color: #ffffff;
       padding: 0.4rem;
     }
+
+    #editBtn{
+  color: #fff;
+  background: #808080;
+  margin-right: 1rem;
+    }
+
   </style>
   <script src="script.js"></script>
 </head>
@@ -56,9 +62,9 @@
   <span id="numOfTasks"></span>
 
   <form id="taskForm" onsubmit="addTask(task_name.value, task_due_date.value); event.preventDefault();">
-    <input type="text" name="task_name" placeholder="タスクを入力..." />
-    <input type="date" name="task_due_date" />
-    <input type="submit" value="登録" />
+    <input id='taskName' type="text" name="task_name" placeholder="タスクを入力..." />
+    <input id='taskDueDate' type="date" name="task_due_date" />
+    <input id='taskSubmit' type="submit" value="登録" />
   </form>
   <ul>
   </ul>
