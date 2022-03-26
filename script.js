@@ -3,9 +3,10 @@ let isEdit = false;
 let editTaskName = '';
 let tasks = [];
 window.addEventListener('load', function () {
+  let cancelBtnElm = document.querySelector('#editCancel');
+  cancelBtnElm.style.display = 'none';
   // リストを取得
   taskListElem = document.querySelector('ul');
-  // タスクを追加
 
   // LocalStorageから配列を読み込む
   loadTasks();
@@ -329,6 +330,31 @@ function setSelectTask(taskName, taskDueDate) {
   let dispEditTaskElm = document.querySelector('#editTaskName');
   dispEditTaskElm.innerText = editTaskName + 'を編集中';
 
+  // キャンセルボタンを表示
+  let cancelBtnElm = document.querySelector('#editCancel');
+  cancelBtnElm.style.display = 'inline-block';
+
   taskNameFormElm.value = taskName;
   taskDueDateElm.value = taskDueDate;
+}
+
+//
+function editCancel() {
+  // 編集中のタスク名をクリア
+  editTaskName = '';
+
+  // フォームの内容をクリア
+  let taskNameFormElm = document.querySelector('#taskName');
+  let taskDueDateElm = document.querySelector('#taskDueDate');
+  taskNameFormElm.value = '';
+  taskDueDateElm.value = '';
+
+  // 画面に表示する編集中のタスク名をクリア
+  let dispEditTaskElm = document.querySelector('#editTaskName');
+  dispEditTaskElm.innerText = '';
+
+  // キャンセルボタンを非表示
+  let cancelBtnElm = document.querySelector('#editCancel');
+  cancelBtnElm.style.display = 'none';
+  isEdit = false;
 }
