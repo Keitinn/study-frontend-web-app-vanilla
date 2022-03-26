@@ -2,6 +2,8 @@ let taskListElem; // どこからでも読み書きできるように外側に�
 let isEdit = false;
 let editTaskName = '';
 let tasks = [];
+let sortMode = '';
+
 window.addEventListener('load', function () {
   let cancelBtnElm = document.querySelector('#editCancel');
   cancelBtnElm.style.display = 'none';
@@ -28,7 +30,9 @@ function renderTasks() {
 
     // 編集ボタン
     let editButtonElm = document.createElement('button');
-    editButtonElm.innerText = '編集';
+    editButtonElm.innerHTML = '<i class="bi bi-pencil"></i>';
+    editButtonElm.setAttribute('type', 'button');
+    editButtonElm.className = 'btn btn-danger dtn-sm';
     editButtonElm.id = 'editBtn';
 
     // 項目に編集ボタンを追加
@@ -338,7 +342,7 @@ function setSelectTask(taskName, taskDueDate) {
   taskDueDateElm.value = taskDueDate;
 }
 
-//
+// タスクの編集をキャンセルする
 function editCancel() {
   // 編集中のタスク名をクリア
   editTaskName = '';
@@ -357,4 +361,45 @@ function editCancel() {
   let cancelBtnElm = document.querySelector('#editCancel');
   cancelBtnElm.style.display = 'none';
   isEdit = false;
+}
+
+// タスク名でソート
+function sortTaskName() {
+  if (sortMode != '' && sortMode == 'nameAsc') {
+    tasks.sort((a, b) => b.name.localeCompare(a.name, 'ja'));
+
+    sortMode = 'nameDesc';
+  } else {
+    tasks.sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+
+    sortMode = 'nameAsc';
+  }
+  saveTasks();
+  renderTasks();
+}
+
+// タスクの期日でソートする
+function sortTaskDueDate() {
+  if (sortMode != '' && sortMode == 'dueAsc') {
+    tasks.sort((a, b) => {
+      if (!a.dueDate) return -1;
+      if (!b.dueDate) return 1;
+      if (new Date(b.dueDate).getTime() < new Date(a.dueDate).getTime()) return -1;
+      if (new Date(b.dueDate).getTime() > new Date(a.dueDate).getTime()) return 1;
+      return 0;
+    });
+    sortMode = 'dueDesc';
+  } else {
+    tasks.sort((a, b) => {
+      if (!a.dueDate) return 1;
+      if (!b.dueDate) return -1;
+      if (new Date(a.dueDate).getTime() < new Date(b.dueDate).getTime()) return -1;
+      if (new Date(a.dueDate).getTime() > new Date(b.dueDate).getTime()) return 1;
+      return 0;
+    });
+    sortMode = 'dueAsc';
+  }
+
+  saveTasks();
+  renderTasks();
 }
