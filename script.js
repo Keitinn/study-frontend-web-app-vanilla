@@ -5,7 +5,7 @@ let tasks = [];
 let sortMode = '';
 
 window.addEventListener('load', function () {
-  let cancelBtnElm = document.querySelector('#editCancel');
+  let cancelBtnElm = document.querySelector('#editCancelBtn');
   cancelBtnElm.style.display = 'none';
   // リストを取得
   taskListElem = document.querySelector('ul');
@@ -335,7 +335,7 @@ function setSelectTask(taskName, taskDueDate) {
   dispEditTaskElm.innerText = editTaskName + 'を編集中';
 
   // キャンセルボタンを表示
-  let cancelBtnElm = document.querySelector('#editCancel');
+  let cancelBtnElm = document.querySelector('#editCancelBtn');
   cancelBtnElm.style.display = 'inline-block';
 
   taskNameFormElm.value = taskName;
@@ -358,7 +358,7 @@ function editCancel() {
   dispEditTaskElm.innerText = '';
 
   // キャンセルボタンを非表示
-  let cancelBtnElm = document.querySelector('#editCancel');
+  let cancelBtnElm = document.querySelector('#editCancelBtn');
   cancelBtnElm.style.display = 'none';
   isEdit = false;
 }

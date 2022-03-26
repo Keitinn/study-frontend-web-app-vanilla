@@ -20,18 +20,8 @@
       }
 
       /* 入力欄及びボタン */
-      input,
-      #editCancel {
+      input {
         font-size: 1.3rem;
-      }
-
-      /* 送信ボタン */
-      input[type='submit'],
-      #editCancel {
-        background-color: #3498db;
-        border: none;
-        color: #ffffff;
-        padding: 0.4rem;
       }
 
       /* リスト */
@@ -48,15 +38,8 @@
         padding: 1rem;
       }
 
-      #export {
-        background-color: #3498db;
-        border: none;
-        color: #ffffff;
-        padding: 0.4rem;
-      }
-
       #taskForm {
-        display: inline;
+        margin: 1rem;
       }
 
       #editBtn {
@@ -82,17 +65,35 @@
       id="taskForm"
       onsubmit="addTask(task_name.value, task_due_date.value); event.preventDefault();"
     >
-      <input id="taskName" type="text" name="task_name" placeholder="タスクを入力..." />
-      <input id="taskDueDate" type="date" name="task_due_date" />
-      <input id="taskSubmit" type="submit" value="登録" />
+      <div class="row">
+        <div class="col">
+          <input
+            id="taskName"
+            class="form-control"
+            type="text"
+            name="task_name"
+            placeholder="タスクを入力..."
+          />
+        </div>
+        <div class="col">
+          <input id="taskDueDate" class="form-control" type="date" name="task_due_date" />
+        </div>
+        <div class="col">
+          <input id="taskSubmit" class="form-control btn btn-primary" type="submit" value="登録" />
+        </div>
+        <div class="col" id="editCancelBtn">
+          <button class="form-control btn btn-warning" type="button" onClick="editCancel()">
+            キャンセル
+          </button>
+        </div>
+      </div>
     </form>
 
-    <button id="editCancel" type="button" onClick="editCancel()">キャンセル</button>
     <br/ >
     <div class="btn-group">
       <button
         id="sortTaskNameBtn"
-        class="btn btn-primary btn-sm"
+        class="btn btn-secondary btn-sm"
         type="button"
         onClick="sortTaskName()"
       >
@@ -101,15 +102,20 @@
       <button
         id="sortTaskDueDate"
         type="button"
-        class="btn btn-primary btn-sm"
+        class="btn btn-secondary btn-sm"
         onClick="sortTaskDueDate()"
       >
         期限でソート
       </button>
     </div>
     <ul></ul>
-    <button id="export" type="button" onClick="csvExport()">CSV出力</button>
-    <form id="importForm">
+    <button id="export" type="button" class="btn btn-secondary" onClick="csvExport()">
+      CSVエクスポート
+    </button>
+    <button id="import" type="button" class="btn btn-secondary" onclick="file.click()">
+      CSVインポート
+    </button>
+    <form id="importForm" style="display: none">
       <input id="file" type="file" name="file" accept=".csv" onchange="csvImport()" />
     </form>
   </body>
