@@ -131,7 +131,7 @@ function renderTasks() {
 // タスクを追加
 function addTask(taskName, taskDueDate) {
   if (!taskName) {
-    alert('タスク名が設定されていません。')
+    alert('タスク名が設定されていません。');
     return;
   }
 
@@ -146,7 +146,7 @@ function addTask(taskName, taskDueDate) {
     for (let task of tasks) {
       if (task.name == editTaskName) {
         task.name = taskName;
-        task.dueDate = taskDueDate
+        task.dueDate = taskDueDate;
 
         editTaskName = '';
         isEdit = false;
@@ -323,5 +323,4 @@ function setSelectTask(taskName, taskDueDate) {
 
   taskNameFormElm.value = taskName;
   taskDueDateElm.value = taskDueDate;
-
 }

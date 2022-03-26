@@ -1,76 +1,77 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>ToDo</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    h1 {
-      font-size: 2rem;
-      text-align: center;
-    }
+  <head>
+    <title>ToDo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      h1 {
+        font-size: 2rem;
+        text-align: center;
+      }
 
-    /* 入力欄及びボタン */
-    input {
-      font-size: 1.3rem;
-    }
+      /* 入力欄及びボタン */
+      input {
+        font-size: 1.3rem;
+      }
 
-    /* 送信ボタン */
-    input[type="submit"] {
-      background-color: #3498db;
-      border: none;
-      color: #ffffff;
-      padding: 0.4rem;
-    }
+      /* 送信ボタン */
+      input[type='submit'] {
+        background-color: #3498db;
+        border: none;
+        color: #ffffff;
+        padding: 0.4rem;
+      }
 
-    /* リスト */
-    ul {
-      padding: 0;
-    }
+      /* リスト */
+      ul {
+        padding: 0;
+      }
 
-    /* リスト項目 */
-    li {
-      background-color: #eeeeee;
-      font-size: 1.5rem;
-      list-style: none;
-      margin-top: 1rem;
-      padding: 1rem;
-    }
+      /* リスト項目 */
+      li {
+        background-color: #eeeeee;
+        font-size: 1.5rem;
+        list-style: none;
+        margin-top: 1rem;
+        padding: 1rem;
+      }
 
-    #export {
-      background-color: #3498db;
-      border: none;
-      color: #ffffff;
-      padding: 0.4rem;
-    }
+      #export {
+        background-color: #3498db;
+        border: none;
+        color: #ffffff;
+        padding: 0.4rem;
+      }
 
-    #editBtn{
-  color: #fff;
-  background: #808080;
-  margin-right: 1rem;
-    }
+      #editBtn {
+        color: #fff;
+        background: #808080;
+        margin-right: 1rem;
+      }
+    </style>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>ToDo アプリ</h1>
 
-  </style>
-  <script src="script.js"></script>
-</head>
-<body>
-  <h1>ToDo アプリ</h1>
+    <br />
 
-  <br />
+    <span id="numOfCompletedTasks"></span>
+    /
+    <span id="numOfTasks"></span>
 
-  <span id="numOfCompletedTasks"></span>
-  /
-  <span id="numOfTasks"></span>
-
-  <form id="taskForm" onsubmit="addTask(task_name.value, task_due_date.value); event.preventDefault();">
-    <input id='taskName' type="text" name="task_name" placeholder="タスクを入力..." />
-    <input id='taskDueDate' type="date" name="task_due_date" />
-    <input id='taskSubmit' type="submit" value="登録" />
-  </form>
-  <ul>
-  </ul>
-  <button id="export" type="button" onClick="csvExport()">CSV出力</button>
-  <form id="importForm">
-    <input id="file" type="file" name="file" accept=".csv" onchange="csvImport()">
-  </form>
-</body>
+    <form
+      id="taskForm"
+      onsubmit="addTask(task_name.value, task_due_date.value); event.preventDefault();"
+    >
+      <input id="taskName" type="text" name="task_name" placeholder="タスクを入力..." />
+      <input id="taskDueDate" type="date" name="task_due_date" />
+      <input id="taskSubmit" type="submit" value="登録" />
+    </form>
+    <ul></ul>
+    <button id="export" type="button" onClick="csvExport()">CSV出力</button>
+    <form id="importForm">
+      <input id="file" type="file" name="file" accept=".csv" onchange="csvImport()" />
+    </form>
+  </body>
 </html>
