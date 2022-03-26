@@ -148,6 +148,10 @@ function addTask(taskName, taskDueDate) {
         task.name = taskName;
         task.dueDate = taskDueDate;
 
+        // 編集中のタスク名をクリア
+        let dispEditTaskElm = document.querySelector('#editTaskName');
+        dispEditTaskElm.innerText = '';
+
         editTaskName = '';
         isEdit = false;
         continue;
@@ -320,6 +324,10 @@ function setSelectTask(taskName, taskDueDate) {
   let taskDueDateElm = document.querySelector('#taskDueDate');
 
   editTaskName = taskName;
+
+  // 編集中のタスク名を設定
+  let dispEditTaskElm = document.querySelector('#editTaskName');
+  dispEditTaskElm.innerText = editTaskName + 'を編集中';
 
   taskNameFormElm.value = taskName;
   taskDueDateElm.value = taskDueDate;
