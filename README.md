@@ -1,6 +1,6 @@
 # study-frontend-web-app-vanilla
 
-このレポジトリは、大阪電気通信大学の卒業生が主体となった社会人サークル｢おでんツールズ｣主催の勉強会で作成された ToDo
+このレポジトリは、大阪電気通信大学の卒業生が主体となった社会人サークル｢OdenTools｣主催の勉強会で作成された ToDo
 アプリです。
 
 # Getting Started
