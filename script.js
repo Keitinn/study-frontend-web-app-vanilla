@@ -157,6 +157,10 @@ function addTask(taskName, taskDueDate) {
         let dispEditTaskElm = document.querySelector('#editTaskName');
         dispEditTaskElm.innerText = '';
 
+        // キャンセルボタンを非表示
+        let cancelBtnElm = document.querySelector('#editCancelBtn');
+        cancelBtnElm.style.display = 'none';
+
         editTaskName = '';
         isEdit = false;
         continue;
