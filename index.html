@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="bomb-effect.css" />
     <style>
       h1 {
         font-size: 2rem;
@@ -44,6 +45,28 @@
 
       #editBtn {
         margin-right: 0.5rem;
+      }
+      #overlay {
+        position: fixed;
+        top: 0;
+        z-index: 10;
+        width: 100vw;
+        height: 100vh;
+        visibility: hidden;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.6);
+        transition: all 0.5s ease-out;
+      }
+      #overlay.overlay-on {
+        visibility: visible;
+        opacity: 1;
+      }
+      .flex {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
     <script src="script.js"></script>
@@ -108,6 +131,33 @@
         期限でソート
       </button>
     </div>
+
+    <div id="overlay" class="overlay-event">
+      <div class="flex">
+        <div id="overlay-inner">
+          <span
+            ><div id="bombBlackDiv">
+              <span id="ledgeSpan"></span>
+              <div id="fuseDiv"></div>
+              <div id="dustDiv">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div></div
+          ></span>
+        </div>
+      </div>
+    </div>
+    <button id="explosion" type="button" class="btn btn-sm overlay-event">この世の世界の理</button>
     <ul></ul>
     <button id="export" type="button" class="btn btn-secondary" onClick="csvExport()">
       CSVエクスポート

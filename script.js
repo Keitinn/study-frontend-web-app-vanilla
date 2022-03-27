@@ -3,12 +3,25 @@ let isEdit = false;
 let editTaskName = '';
 let tasks = [];
 let sortMode = '';
+let overlay;
+let clickArea;
+let fireFlg = 0;
 
 window.addEventListener('load', function () {
   let cancelBtnElm = document.querySelector('#editCancelBtn');
   cancelBtnElm.style.display = 'none';
   // リストを取得
   taskListElem = document.querySelector('ul');
+
+  overlay = document.getElementById('overlay');
+  // 指定した要素に対して上記関数を実行するクリックイベントを設定
+  clickArea = document.getElementsByClassName('overlay-event');
+  for (let i = 0; i < clickArea.length; i++) {
+    clickArea[i].addEventListener('click', overlayToggle, false);
+  }
+
+  const overlayInner = document.getElementById('overlay-inner');
+  overlayInner.addEventListener('click', stopEvent, false);
 
   // LocalStorageから配列を読み込む
   loadTasks();
@@ -406,4 +419,46 @@ function sortTaskDueDate() {
 
   saveTasks();
   renderTasks();
+}
+
+// すべてのタスクを削除する
+function deleteAllTasks() {
+  tasks.splice(0);
+  saveTasks();
+  renderTasks();
+}
+
+// オーバーレイ切り替え
+function overlayToggle() {
+  overlay.classList.toggle('overlay-on');
+  deleteAllTasks();
+  fire();
+}
+
+// イベントに対してバブリングを停止
+function stopEvent(event) {
+  event.stopPropagation();
+}
+
+// 爆破
+function fire() {
+  let bombBlackElm = document.getElementById('bombBlackDiv');
+  let ledgeElm = document.getElementById('ledgeSpan');
+  let fuseElm = document.getElementById('fuseDiv');
+  let dustElm = document.getElementById('dustDiv');
+  if (fireFlg == 0) {
+    bombBlackElm.classList.add('bomb');
+    bombBlackElm.classList.add('black');
+    ledgeElm.classList.add('ledge');
+    fuseElm.classList.add('fuse');
+    dustElm.classList.add('dust');
+    fireFlg = 1;
+  } else {
+    bombBlackElm.classList.remove('bomb');
+    bombBlackElm.classList.remove('black');
+    ledgeElm.classList.remove('ledge');
+    fuseElm.classList.remove('fuse');
+    dustElm.classList.remove('dust');
+    fireFlg = 0;
+  }
 }

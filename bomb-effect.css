@@ -1,0 +1,274 @@
+/*参照: https://qiita.com/junya/items/dfa80e8b8f3a6605bcd1*/
+.bomb {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+
+  transform: translate(-50%, -50%) rotate(5deg);
+}
+
+.bomb:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+
+  background-color: currentColor;
+  box-shadow: 0 0 1px 1px black inset;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 1;
+}
+
+.bomb:after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 8%;
+
+  width: 50%;
+  height: 50%;
+  border-radius: 45%;
+  border: 5px solid transparent;
+  border-left: 5px dotted white;
+
+  transform: rotate(30deg);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* 出っ張り */
+.bomb .ledge {
+  position: absolute;
+  left: 50%;
+
+  display: inline-block;
+  width: 30%;
+  height: 20%;
+  border-radius: 15% 15% 100% 100%;
+  background-color: currentColor;
+
+  transform: translate(-50%, -25%);
+
+  z-index: 2;
+}
+
+/* 導火線 */
+.bomb .fuse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 99%;
+  height: 99%;
+  border: 3px solid transparent;
+  border-top-color: #d0baa5;
+  border-right-color: #d0baa5;
+  border-radius: 100%;
+
+  box-sizing: border-box;
+  transform: translate(-15%, -75%) rotate(-20deg);
+
+  z-index: -1;
+}
+
+.bomb .fuse:before,
+.bomb .fuse:after {
+  content: '＊';
+  position: absolute;
+  right: -0.55em;
+  bottom: 0;
+
+  display: inline-block;
+  font-size: 1.5em;
+}
+
+.bomb .fuse:before {
+  color: red;
+  transform: translate(-50%, 0) rotate(0);
+}
+
+.bomb .fuse:after {
+  color: orange;
+  transform: translate(-50%, 0) rotate(30deg);
+}
+
+.bomb .dust {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+/* 画面がちらつく場合はshadowの指定数を減らすと良い */
+.dust span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+
+  background-color: blue;
+  box-shadow: +30px -30px 0 0 green, -30px +30px 0 0 purple, +60px +60px 0 0 pink,
+    -60px -60px 0 0 red;
+
+  backface-visibility: hidden;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
+
+  opacity: 0;
+  z-index: 2;
+}
+
+.dust span:nth-of-type(1) {
+  --angle: 00deg;
+}
+.dust span:nth-of-type(2) {
+  --angle: 30deg;
+}
+.dust span:nth-of-type(3) {
+  --angle: 60deg;
+}
+.dust span:nth-of-type(4) {
+  --angle: 90deg;
+}
+.dust span:nth-of-type(5) {
+  --angle: 120deg;
+}
+.dust span:nth-of-type(6) {
+  --angle: 150deg;
+}
+.dust span:nth-of-type(7) {
+  --angle: 180deg;
+}
+.dust span:nth-of-type(8) {
+  --angle: 210deg;
+}
+.dust span:nth-of-type(9) {
+  --angle: 240deg;
+}
+.dust span:nth-of-type(10) {
+  --angle: 270deg;
+}
+.dust span:nth-of-type(11) {
+  --angle: 300deg;
+}
+.dust span:nth-of-type(12) {
+  --angle: 330deg;
+}
+
+.dust .msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: inline-block;
+  margin: 0;
+
+  text-shadow: 2px 2px 0 black;
+  opacity: 0;
+
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.orange {
+  color: orange;
+}
+
+.black {
+  color: black;
+}
+
+/* animation */
+.bomb:before,
+.bomb:after,
+.bomb .ledge {
+  animation: after_exp 1s 3s steps(1, start) forwards;
+}
+
+.bomb .fuse {
+  animation: fuse_anim 3s linear, after_exp 1s 3s steps(1, start) forwards;
+}
+
+.bomb .fuse:before {
+  animation: burning 3s linear;
+}
+.bomb .fuse:after {
+  animation: burning 3s linear reverse;
+}
+
+.dust span {
+  animation: explosion 3s 3s linear;
+}
+
+.dust .msg {
+  animation: message 3s 3s linear;
+}
+
+@keyframes fuse_anim {
+  49% {
+    border-top-color: #d0baa5;
+  }
+
+  50% {
+    border-top-color: transparent;
+  }
+
+  100% {
+    border-top-color: transparent;
+    transform: translate(-15%, -75%) rotate(-200deg);
+  }
+}
+
+@keyframes burning {
+  to {
+    transform: translate(-50%, 0) rotate(360deg);
+  }
+}
+
+@keyframes explosion {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(50px);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-200px) scale(0.5);
+  }
+}
+
+/* 爆発後 */
+@keyframes after_exp {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes message {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    font-size: 4.5em;
+  }
+}
