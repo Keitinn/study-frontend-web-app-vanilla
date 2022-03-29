@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
   taskListElem = document.querySelector('ul');
 
   overlay = document.getElementById('overlay');
-  // 指定した要素に対して上記関数を実行するクリックイベントを設定
+  // 指定した要素に対して上オーバーレイ切り替えを実行するクリックイベントを設定
   clickArea = document.getElementsByClassName('overlay-event');
   for (let i = 0; i < clickArea.length; i++) {
     clickArea[i].addEventListener('click', overlayToggle, false);
@@ -461,4 +461,42 @@ function fire() {
     dustElm.classList.remove('dust');
     fireFlg = 0;
   }
+}
+
+// 期日が一番近いタスクのインデックスを返す
+function getClosestDeadlineTaskIndex() {
+  let index = 0;
+  let closestDeadlineDateIndex = 0;
+  let exists = false;
+  let closestDeadlineDate = 0;
+  let nowDate = new Date();
+  let nowDateTime = nowDate.getTime();
+
+  for (let task of tasks) {
+    let taskDate = new Date(task.dueDate);
+    let taskDateTime = taskDate.getTime();
+    // 期日が切れていないか判定 → Trueのとき期日0日以上
+    let isOverdue =
+      nowDateTime - taskDateTime < 0 ||
+      nowDate.toLocaleDateString() == taskDate.toLocaleDateString();
+    if (
+      task.dueDate &&
+      isOverdue &&
+      (closestDeadlineDate == 0 || closestDeadlineDate.getTime() > taskDateTime)
+    ) {
+      closestDeadlineDate = taskDate;
+      closestDeadlineDateIndex = index;
+      index++;
+      exists = true;
+    } else {
+      index++;
+    }
+  }
+
+  // 期日切れしてない一番期日が近いタスクのインデックスを返す
+  // 存在しない場合、-1を返す
+  if (exists) {
+    return closestDeadlineDateIndex;
+  }
+  return -1;
 }
