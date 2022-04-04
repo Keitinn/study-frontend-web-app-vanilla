@@ -6,6 +6,7 @@ let sortMode = '';
 let overlay;
 let clickArea;
 let fireFlg = 0;
+let remainingSeconde = -1;
 
 window.addEventListener('load', function () {
   let cancelBtnElm = document.querySelector('#editCancelBtn');
@@ -26,8 +27,12 @@ window.addEventListener('load', function () {
   // LocalStorageから配列を読み込む
   loadTasks();
 
-  // 描画
-  renderTasks();
+  // 0.1秒ごとに実行
+  setInterval(() => {
+    remainingSeconde = getClosestDeadlineTaskRemainingSeconds();
+    // 描画
+    renderTasks();
+  }, 100);
 });
 
 function renderTasks() {
@@ -35,6 +40,8 @@ function renderTasks() {
   taskListElem.innerHTML = '';
 
   let numOfCompletedTasks = 0;
+  let index = 0;
+  let closestDeadlineTaskIndex = getClosestDeadlineTaskIndex();
   // 操作された内容で再度li要素を追加
   for (let task of tasks) {
     // リストの項目を作成
@@ -113,6 +120,12 @@ function renderTasks() {
       taskRemainingDaysElm.innerText = '';
     }
 
+    if (index == closestDeadlineTaskIndex) {
+      taskRemainingDaysElm.innerText = '残り:' + dateTimeDifference / 1000 + '秒';
+      taskRemainingDaysElm.style.color = 'red';
+      taskRemainingDaysElm.style.fontSize = '1.5rem';
+    }
+
     taskRemainingDaysElm.style.marginLeft = '1rem';
 
     // 項目に対し、期限表示を追加
@@ -123,6 +136,8 @@ function renderTasks() {
 
     // リストに対し、項目を追加
     taskListElem.appendChild(taskElem);
+
+    index++;
   }
 
   // 全タスクの件数を更新
@@ -464,6 +479,7 @@ function fire() {
 }
 
 // 期日が一番近いタスクのインデックスを返す
+// 存在しない場合-1を返す
 function getClosestDeadlineTaskIndex() {
   let index = 0;
   let closestDeadlineDateIndex = 0;
@@ -499,4 +515,12 @@ function getClosestDeadlineTaskIndex() {
     return closestDeadlineDateIndex;
   }
   return -1;
+}
+
+// 一番期日が近いタスクがあと期日まであと何秒か取得する
+function getClosestDeadlineTaskRemainingSeconds() {
+  let closestDeadlineTaskIndex = getClosestDeadlineTaskIndex();
+  if (closestDeadlineTaskIndex == -1) {
+    return -1;
+  }
 }
