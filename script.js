@@ -7,6 +7,7 @@ let overlay;
 let clickArea;
 let fireFlg = 0;
 let remainingSeconde = -1;
+let closestDeadlineTaskIndex = -1;
 
 window.addEventListener('load', function () {
   let cancelBtnElm = document.querySelector('#editCancelBtn');
@@ -29,7 +30,6 @@ window.addEventListener('load', function () {
 
   // 0.1秒ごとに実行
   setInterval(() => {
-    remainingSeconde = getClosestDeadlineTaskRemainingSeconds();
     // 描画
     renderTasks();
   }, 100);
@@ -515,12 +515,4 @@ function getClosestDeadlineTaskIndex() {
     return closestDeadlineDateIndex;
   }
   return -1;
-}
-
-// 一番期日が近いタスクがあと期日まであと何秒か取得する
-function getClosestDeadlineTaskRemainingSeconds() {
-  let closestDeadlineTaskIndex = getClosestDeadlineTaskIndex();
-  if (closestDeadlineTaskIndex == -1) {
-    return -1;
-  }
 }
